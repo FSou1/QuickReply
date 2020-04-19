@@ -1,7 +1,5 @@
 # QuickReply
 
-> ✎ A chrome extension for quick replies to frequently asked questions.
-
 🌟 The main purpose of this extension is to make answers to frequently asked questions faster.
 
 * Sometimes you might need to reply to a lot of people;
