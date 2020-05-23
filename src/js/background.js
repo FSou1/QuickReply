@@ -1,49 +1,40 @@
-import { Guid } from 'guid-typescript';
 import { service } from '../svelte/reply/service.js';
+import { createContextMenuItems } from './lib/context_menu_item.js';
+import { createContextMenu } from './lib/context_menu.js';
 
-export function onClick(info, tab) {
-  chrome.tabs.sendMessage(tab.id, { action: 'context-click', menuItemId: info.menuItemId });
+function drawContextMenu() {
+  service.getAll().then((replies) => {
+    const nodes = createContextMenuItems(replies);
+    return createContextMenu(null, nodes);
+  });
 }
 
-export function createContextMenu(parentId, nodes) {
-  for (var node of nodes) {
-    chrome.contextMenus.create({
-      id: node.id,
-      title: node.title,
-      contexts: ['editable'],
-      parentId: parentId,
-      onclick: onClick
-    });
+function openOptionsOnPopupClick() {
+  chrome.browserAction.setPopup({ popup: '' });
 
-    if (node.id && node.nodes) {
-      createContextMenu(node.id, node.nodes);
+  chrome.browserAction.onClicked.addListener(() => {
+    chrome.tabs.create({ url: 'options.html' });
+  });
+}
+
+function subscribeOnRuntimeMessages() {
+  function requestHandler(request, sender, sendResponse) {
+    switch (request.topic) {
+      case 'update_context_menu': {
+        drawContextMenu();
+        break;
+      }
+      default: {
+        throw new Error('Unexpected message topic: ' + request.topic);
+      }
     }
   }
+
+  chrome.runtime.onMessage.addListener(requestHandler);
 }
 
-export function buildNode(reply) {
-  return {
-    id: reply.id,
-    title: reply.displayName
-  };
-}
-
-export function buildNodes(replies) {
-  const root = {
-    id: Guid.raw(),
-    title: 'QuickReply',
-    nodes: replies.map(buildNode),
-  };
-  return [root];
-}
-
-service.getAll().then((replies) => {
-  const nodes = buildNodes(replies);
-  return createContextMenu(null, nodes);
-});
-
-chrome.browserAction.setPopup({ popup: '' });
-
-chrome.browserAction.onClicked.addListener(() => {
-  chrome.tabs.create({ url: 'options.html' });
-});
+(function () {
+  drawContextMenu();
+  openOptionsOnPopupClick();
+  subscribeOnRuntimeMessages();
+})();
