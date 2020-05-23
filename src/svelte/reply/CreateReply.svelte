@@ -6,6 +6,8 @@
 <script>
 	import { service } from './service.js';
 	import { store } from './store.js';
+	import { exchange } from './exchange.js';
+	import { config } from '../../js/config.js';
 
 	const form = {
 		displayName: null,
@@ -13,12 +15,13 @@
 	};
 
 	$: if(!form.displayName && form.content) {
-		form.displayName = form.content.slice(0, 25);
+		form.displayName = form.content.slice(0, config.display_name_length);
 	}
 
 	function handleCreate() {
 		return service.add({ ...form }).then(item => {
 			store.add(item);
+			exchange.contextMenu.update();
 			resetForm();
 		});
 	}
@@ -34,22 +37,22 @@
 </script>
 
 <div>
+	<label for="displayname">Display name:</label>
+	<input 
+		id="displayname" 
+		type="text" 
+		name="displayname"
+		maxlength="{config.display_name_length}"
+		bind:value={form.displayName}>
+</div>
+
+<div>
 	<label for="content">Content: <abbr title="required">*</abbr></label>
 	<textarea 
 		id="content" 
 		name="content"
 		required
 		bind:value={form.content}></textarea>
-</div>
-
-<div>
-	<label for="displayname">Display name:</label>
-	<input 
-		id="displayname" 
-		type="text" 
-		name="displayname"
-		maxlength="25"
-		bind:value={form.displayName}>
 </div>
 
 <div>

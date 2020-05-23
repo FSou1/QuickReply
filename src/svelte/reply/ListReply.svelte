@@ -1,11 +1,13 @@
 <script>
   import { service } from './service.js';
   import { store } from './store.js';
+  import { exchange } from './exchange.js';
   import ViewReply from './ViewReply.svelte';
 
   function handleDelete(row) {
     return service.remove(row).then((item) => {
       store.delete(item);
+      exchange.contextMenu.update();
     });
   }
 </script>
