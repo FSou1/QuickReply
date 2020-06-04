@@ -24,6 +24,7 @@
 	import { service } from './reply/service.js';
 	import CreateReply from './reply/CreateReply.svelte';
 	import ListReply from './reply/ListReply.svelte';
+	import ListVariable from './variables/ListVariable.svelte';
 
 	onMount(() => {
 		service.getAll().then((data) => {
@@ -45,5 +46,8 @@
 
 		<h2>Create reply</h2>
 		<CreateReply />
+
+		<h2>Template variables</h2>
+		<ListVariable />
   </section>
 </main>
