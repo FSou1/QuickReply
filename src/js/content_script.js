@@ -1,7 +1,7 @@
-import insertTextAtCursor from 'insert-text-at-cursor';
 import findFocusedElem from 'find-focused-element';
 import { service } from '../svelte/reply/service.js';
 import { format } from './lib/format.js';
+import { copyText, pasteText } from './lib/clipboard.js';
 
 chrome.runtime.onMessage.addListener(requestHandler);
 
@@ -20,7 +20,7 @@ function requestHandler(request, sender, sendResponse) {
     service.get(replyId).then((reply) => {
       if (reply) {
         const content = format(reply, window.document);
-        
+
         insertAtCursor(focusedElem, content);
       }
     });
@@ -36,5 +36,7 @@ function insertAtCursor(element, textToInsert) {
     return;
   }
 
-  insertTextAtCursor(element, textToInsert);
+  copyText(textToInsert);
+
+  pasteText(element);
 }

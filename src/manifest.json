@@ -32,6 +32,8 @@
   "permissions": [
     "contextMenus",
     "activeTab",
-    "storage"
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
   ]  
 }

@@ -1,4 +1,5 @@
 import { parser as linkedInParser } from './linked_in.js';
+import { parser as facebookParser } from './facebook.js';
 
 function createFactory() {
   return {
@@ -9,6 +10,10 @@ function createFactory() {
 
       if(location.href.includes('linkedin')) {
         return linkedInParser;
+      }
+
+      if(location.href.includes('facebook')) {
+        return facebookParser;
       }
 
       return null;
