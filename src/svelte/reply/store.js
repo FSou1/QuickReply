@@ -5,7 +5,7 @@ function createStore() {
 
   return {
     subscribe,
-    init: (items) => set(items),
+    set: (items) => set(items),
     add: (item) => update(n => [...n, item]),
     delete: (item) => update(n => n.filter(i => i.id !== item.id))
   }

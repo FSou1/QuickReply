@@ -28,7 +28,7 @@
 
 	onMount(() => {
 		service.getAll().then((data) => {
-			store.init(data);
+			store.set(data);
 		});
 	});
 </script>

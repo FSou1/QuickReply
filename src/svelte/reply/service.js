@@ -47,7 +47,7 @@ function createService() {
             console.error(chrome.runtime.lastError.message);
             reject(chrome.runtime.lastError.message);
           } else {
-            resolve(true);
+            resolve(items);
           }
         });
       });

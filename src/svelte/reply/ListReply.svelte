@@ -4,6 +4,11 @@
   import { exchange } from './exchange.js';
   import ViewReply from './ViewReply.svelte';
 
+  let items = [];
+  store.subscribe((data) => {
+    items = data;
+  });
+
   function handleDelete(row) {
     return service.remove(row).then((item) => {
       store.delete(item);
@@ -12,7 +17,7 @@
   }
 </script>
 
-{#each $store as item}
+{#each items as item}
   <section class="item">
     <ViewReply item={item} />
 
