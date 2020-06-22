@@ -21,7 +21,7 @@ function createContextMenuItem(reply: Reply): MenuItem {
 function createContextMenuItems(replies: Reply[]): MenuItem[] {
   const root: MenuItem = {
     id: '00000000-0000-0000-0000-000000000000',
-    title: 'QuickReplyAng',
+    title: 'QuickReply',
     nodes: replies.map(createContextMenuItem),
   };
   return [root];
