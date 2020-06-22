@@ -1,0 +1,27 @@
+<h1>Replies</h1>
+
+<p *ngIf="data && data.length === 0">No quick replies yet. Add first!</p>
+
+<mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
+  <mat-expansion-panel *ngFor="let item of data" cdkDrag>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon [inline]="true" cdkDragHandle>drag_indicator</mat-icon>
+        {{ item.displayName }}
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <p class="content">{{ item.content }}</p>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="delete(item)">Delete</button>
+      <button mat-button color="primary" [routerLink]="['/options/replies/edit', item.id]">Edit</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<button mat-fab color="primary" [routerLink]="'/options/replies/create'" class="fab_button">
+  <mat-icon>add</mat-icon>
+</button>
