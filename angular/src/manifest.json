@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+
+  "name": "QuickReply",
+  "description": "✎ A chrome extension for quick replies to frequently asked questions",
+  "version": "1.0.2",
+
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+   "128": "img/icon128.png"
+  },
+
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+
+  "browser_action": {
+    "default_title": "Options",
+    "default_icon": "img/icon48.png"
+  },
+
+  "options_page": "index.html?#/options",
+  
+  "content_scripts": [
+    {
+      "js": [
+        "contentPage.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  
+  "background": {
+    "scripts": [
+      "backgroundPage.js"
+    ]
+  },
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
