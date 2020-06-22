@@ -1,0 +1,20 @@
+<h1>Edit reply</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <mat-form-field hintLabel="Max 25 characters" class="full-width" appearance="outline">
+    <mat-label>Display name</mat-label>
+    <input matInput placeholder="Ex. Greetings" formControlName="displayName" maxlength="25" #displayName>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>Content</mat-label>
+    <textarea matInput placeholder="Ex. Hi, how are you doing?" rows="10" required formControlName="content"></textarea>
+  </mat-form-field>
+
+  <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+    Submit
+  </button>
+  <button mat-raised-button [routerLink]="['/options/replies']">
+    Cancel
+  </button>
+</form>
