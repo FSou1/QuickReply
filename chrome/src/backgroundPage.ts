@@ -1,99 +1,99 @@
-import { service } from '../../shared/service.js';
+import { service } from '../../shared/service.js'
 
-class Reply {
+export class Reply {
   id: string;
   displayName: string;
 }
 
-class MenuItem {
+export class MenuItem {
   id: string;
   title: string;
   nodes?: MenuItem[];
 }
 
-function createContextMenuItem(reply: Reply): MenuItem {
+function createContextMenuItem (reply: Reply): MenuItem {
   return {
     id: reply.id,
     title: reply.displayName
-  };
+  }
 }
 
-function createContextMenuItems(replies: Reply[]): MenuItem[] {
+function createContextMenuItems (replies: Reply[]): MenuItem[] {
   const root: MenuItem = {
     id: '00000000-0000-0000-0000-000000000000',
     title: 'QuickReply',
-    nodes: replies.map(createContextMenuItem),
-  };
-  return [root];
+    nodes: replies.map(createContextMenuItem)
+  }
+  return [root]
 }
 
-function onMenuItemClick(info: any, tab: any): void {
+function onMenuItemClick (info: any, tab: any): void {
   chrome.tabs.sendMessage(tab.id, {
     action: 'context-click',
-    menuItemId: info.menuItemId,
-  });
+    menuItemId: info.menuItemId
+  })
 }
 
-function createMenuItem(id: any, title: string, parentId: string) {
+function createMenuItem (id: any, title: string, parentId: string) {
   return {
     id,
     title,
     parentId,
     contexts: ['editable'],
-    onclick: onMenuItemClick,
-  };
+    onclick: onMenuItemClick
+  }
 }
 
-function createChildMenuItems(node: MenuItem): void {
+function createChildMenuItems (node: MenuItem): void {
   if (node.id && node.nodes) {
-    createMenu(node.id, node.nodes);
+    createMenu(node.id, node.nodes)
   }
 }
 
-function createMenu(parentId: string, nodes: MenuItem[]): void {
+function createMenu (parentId: string, nodes: MenuItem[]): void {
   for (const node of nodes) {
-    const item = createMenuItem(node.id, node.title, parentId);
-    chrome.contextMenus.create(item, () => createChildMenuItems(node));
+    const item = createMenuItem(node.id, node.title, parentId)
+    chrome.contextMenus.create(item, () => createChildMenuItems(node))
   }
 }
 
-function createContextMenu(parentId: string, nodes: MenuItem[]): void {
-  chrome.contextMenus.removeAll(() => createMenu(parentId, nodes));
+function createContextMenu (parentId: string, nodes: MenuItem[]): void {
+  chrome.contextMenus.removeAll(() => createMenu(parentId, nodes))
 }
 
-function drawContextMenu(): void {
+function drawContextMenu (): void {
   service.getAll().then((replies) => {
-    const nodes = createContextMenuItems(replies);
-    return createContextMenu(null, nodes);
-  });
+    const nodes = createContextMenuItems(replies)
+    return createContextMenu(null, nodes)
+  })
 }
 
-function subscribeOnRuntimeMessages() {
-  function requestHandler(request, sender, sendResponse) {
+function subscribeOnRuntimeMessages () {
+  function requestHandler (request, sender, sendResponse) {
     switch (request.topic) {
       case 'update_context_menu': {
-        drawContextMenu();
-        break;
+        drawContextMenu()
+        break
       }
       default: {
-        throw new Error('Unexpected message topic: ' + request.topic);
+        throw new Error('Unexpected message topic: ' + request.topic)
       }
     }
   }
 
-  chrome.runtime.onMessage.addListener(requestHandler);
+  chrome.runtime.onMessage.addListener(requestHandler)
 }
 
-function openOptionsOnPopupClick() {
-  chrome.browserAction.setPopup({ popup: '' });
+function openOptionsOnPopupClick () {
+  chrome.browserAction.setPopup({ popup: '' })
 
   chrome.browserAction.onClicked.addListener(() => {
-    chrome.tabs.create({ url: 'index.html?#/options' });
-  });
+    chrome.tabs.create({ url: 'index.html?#/options' })
+  })
 }
 
-(function() {
-  drawContextMenu();
-  subscribeOnRuntimeMessages();
-  openOptionsOnPopupClick();
-})();
+(function () {
+  drawContextMenu()
+  subscribeOnRuntimeMessages()
+  openOptionsOnPopupClick()
+})()
