@@ -16,8 +16,8 @@
     "watch": "npm run clean && npm-run-all --parallel watch:*",
     "clean": "rimraf angular/dist",
     "pack": "cd angular/dist && bestzip ../../extension-build.zip *",
-    "lint": "eslint ./chrome/src/**/*.ts ./angular/src/**/*.ts",
-    "lint-fix": "eslint ./chrome/src/**/*.ts ./angular/src/**/*.ts --fix"
+    "lint": "eslint ./chrome/src/** ./angular/src/**",
+    "lint-fix": "eslint ./chrome/src/** ./angular/src/** --fix"
   },
   "author": "",
   "license": "MIT",
