@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable no-unused-vars */
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, Input, Inject } from '@angular/core'
 import { Reply } from '../../models'
 import { Location } from '@angular/common'
 import { Validators, FormControl, FormGroup } from '@angular/forms'
@@ -9,6 +9,7 @@ import { ReplyService } from '../../services/reply.service'
 import { ActivatedRoute, ParamMap } from '@angular/router'
 import { switchMap, take, tap } from 'rxjs/operators'
 import { ExchangeService } from 'src/app/modules/shared/services/exchange.service'
+import { APP_CONFIG, IAppConfig } from 'src/app/app.config'
 
 @Component({
   selector: 'app-edit-reply',
@@ -21,12 +22,15 @@ export class EditReplyComponent implements OnInit {
 
   @ViewChild('displayName', { static: true }) displayName: ElementRef;
 
+  templates: string[] = this.config.supportedParameters;
+
   constructor (
     private route: ActivatedRoute,
     private _service: ReplyService,
     private _location: Location,
     private notification: NotificationService,
-    private exchange: ExchangeService
+    private exchange: ExchangeService,
+    @Inject(APP_CONFIG) private config: IAppConfig
   ) {}
 
   ngOnInit (): void {
