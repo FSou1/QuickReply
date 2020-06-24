@@ -4,14 +4,21 @@
   bottom: 25px;
 }
 
-.mat-expansion-panel-header-title,
-.mat-expansion-panel-header-description {
-  flex-basis: 0;
+.mat-expansion-panel-header-title {
+  flex: 0 0 275px;
 }
 
 .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
+}
+
+.description {
+  width: 75%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .content {

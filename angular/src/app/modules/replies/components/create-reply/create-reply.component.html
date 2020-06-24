@@ -9,6 +9,9 @@
   <mat-form-field class="full-width" appearance="outline">
     <mat-label>Content</mat-label>
     <textarea matInput placeholder="Ex. Hi, how are you doing?" rows="10" required formControlName="content"></textarea>
+    <mat-hint>
+      Supported parameters: {{ templates.join(', ') }}
+    </mat-hint>
   </mat-form-field>
 
   <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">

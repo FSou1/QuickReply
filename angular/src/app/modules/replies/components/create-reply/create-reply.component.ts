@@ -1,12 +1,13 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable no-unused-vars */
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { ReplyService } from '../../services/reply.service'
 import { Reply } from '../../models'
 import { Location } from '@angular/common'
 import { NotificationService } from 'src/app/modules/shared/services/notification.service'
 import { ExchangeService } from 'src/app/modules/shared/services/exchange.service'
+import { APP_CONFIG, IAppConfig } from 'src/app/app.config'
 
 @Component({
   selector: 'app-create-reply',
@@ -18,11 +19,14 @@ export class CreateReplyComponent implements OnInit {
 
   @ViewChild('displayName', { static: true }) displayName: ElementRef;
 
+  templates: string[] = this.config.supportedParameters;
+
   constructor (
     private _service: ReplyService,
     private _location: Location,
     private notification: NotificationService,
-    private exchange: ExchangeService
+    private exchange: ExchangeService,
+    @Inject(APP_CONFIG) private config: IAppConfig
   ) {}
 
   ngOnInit (): void {
