@@ -1,13 +1,14 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from '@angular/router';
-import { CreateReplyComponent } from './components/create-reply/create-reply.component';
-import { ReplyListComponent } from './components/reply-list/reply-list.component';
-import { EditReplyComponent } from './components/edit-reply/edit-reply.component';
+/* eslint-disable no-unused-vars */
+import { NgModule } from '@angular/core'
+import { Routes, RouterModule } from '@angular/router'
+import { CreateReplyComponent } from './components/create-reply/create-reply.component'
+import { ReplyListComponent } from './components/reply-list/reply-list.component'
+import { EditReplyComponent } from './components/edit-reply/edit-reply.component'
 
 const routes: Routes = [
   {
     path: '',
-    component: ReplyListComponent,
+    component: ReplyListComponent
   },
   {
     path: 'create',
@@ -17,7 +18,7 @@ const routes: Routes = [
     path: 'edit/:id',
     component: EditReplyComponent
   }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
