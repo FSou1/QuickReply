@@ -1,42 +1,42 @@
-import findFocusedElem from 'find-focused-element'
-import { format } from './lib/format.js'
-import { copyText, pasteText } from './lib/clipboard.js'
-import { service } from '../../shared/service.js'
+import findFocusedElem from 'find-focused-element';
+import { format } from './lib/format';
+import { copyText, pasteText } from './lib/clipboard';
+import { service } from '../../shared/service.js';
 
-chrome.runtime.onMessage.addListener(requestHandler)
+chrome.runtime.onMessage.addListener(requestHandler);
 
-function requestHandler (request, sender, sendResponse) {
+function requestHandler (request) {
   if (request && request.action === 'context-click' && request.menuItemId) {
-    const focusedElem = findFocusedElem(window.document)
+    const focusedElem = findFocusedElem(window.document);
     if (!focusedElem) {
-      throw new Error('focusedElem was not found')
+      throw new Error('focusedElem was not found');
     }
 
-    const replyId = request.menuItemId
+    const replyId = request.menuItemId;
     if (!replyId) {
-      throw new Error('replyId was null or empty')
+      throw new Error('replyId was null or empty');
     }
 
     service.get(replyId).then((reply) => {
       if (reply) {
-        const content = format(reply, window.document)
+        const content = format(reply, window.document);
 
-        insertAtCursor(focusedElem, content)
+        insertAtCursor(focusedElem, content);
       }
-    })
+    });
   }
 }
 
 function insertAtCursor (element, textToInsert) {
   if (!element) {
-    throw new Error('Unexpected input' + element)
+    throw new Error('Unexpected input' + element);
   }
 
   if (!textToInsert) {
-    return
+    return;
   }
 
-  copyText(textToInsert)
+  copyText(textToInsert);
 
-  pasteText(element)
+  pasteText(element);
 }

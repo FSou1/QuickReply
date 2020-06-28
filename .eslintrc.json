@@ -3,9 +3,14 @@
     "browser": true,
     "es6": true,
     "webextensions": true,
-    "jest": true
+    "jest": true,
+    "amd": true,
+    "node": true
   },
-  "extends": ["standard"],
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "semi": [2, "always"]
+  },
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"

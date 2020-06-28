@@ -3,7 +3,7 @@
 
   "name": "QuickReply",
   "description": "✎ A chrome extension for quick replies to frequently asked questions",
-  "version": "1.0.3",
+  "version": "1.0.4",
 
   "icons": {
     "16": "img/icon16.png",

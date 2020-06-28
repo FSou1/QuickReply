@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
-import { OptionsComponent } from './pages/options/options.component'
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { OptionsComponent } from './pages/options/options.component';
 
 const routes: Routes = [
   {
@@ -14,7 +13,7 @@ const routes: Routes = [
     component: OptionsComponent,
     loadChildren: () => import('../replies/replies.module').then(m => m.RepliesModule)
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

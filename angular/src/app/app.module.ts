@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { AppRoutingModule } from './app-routing.module'
-import { AppComponent } from './app.component'
-import { APP_CONFIG, APP_DI_CONFIG } from './app.config'
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { APP_CONFIG, APP_DI_CONFIG } from './app.config';
 
 @NgModule({
   declarations: [AppComponent],
