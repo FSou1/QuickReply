@@ -1,8 +1,10 @@
-import { service } from '../../shared/service.js'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { service } from '../../shared/service.js';
 
 export class Reply {
   id: string;
   displayName: string;
+  content: string;
 }
 
 export class MenuItem {
@@ -15,7 +17,7 @@ function createContextMenuItem (reply: Reply): MenuItem {
   return {
     id: reply.id,
     title: reply.displayName
-  }
+  };
 }
 
 function createContextMenuItems (replies: Reply[]): MenuItem[] {
@@ -23,15 +25,15 @@ function createContextMenuItems (replies: Reply[]): MenuItem[] {
     id: '00000000-0000-0000-0000-000000000000',
     title: 'QuickReply',
     nodes: replies.map(createContextMenuItem)
-  }
-  return [root]
+  };
+  return [root];
 }
 
 function onMenuItemClick (info: any, tab: any): void {
   chrome.tabs.sendMessage(tab.id, {
     action: 'context-click',
     menuItemId: info.menuItemId
-  })
+  });
 }
 
 function createMenuItem (id: any, title: string, parentId: string) {
@@ -41,59 +43,59 @@ function createMenuItem (id: any, title: string, parentId: string) {
     parentId,
     contexts: ['editable'],
     onclick: onMenuItemClick
-  }
+  };
 }
 
 function createChildMenuItems (node: MenuItem): void {
   if (node.id && node.nodes) {
-    createMenu(node.id, node.nodes)
+    createMenu(node.id, node.nodes);
   }
 }
 
 function createMenu (parentId: string, nodes: MenuItem[]): void {
   for (const node of nodes) {
-    const item = createMenuItem(node.id, node.title, parentId)
-    chrome.contextMenus.create(item, () => createChildMenuItems(node))
+    const item = createMenuItem(node.id, node.title, parentId);
+    chrome.contextMenus.create(item, () => createChildMenuItems(node));
   }
 }
 
 function createContextMenu (parentId: string, nodes: MenuItem[]): void {
-  chrome.contextMenus.removeAll(() => createMenu(parentId, nodes))
+  chrome.contextMenus.removeAll(() => createMenu(parentId, nodes));
 }
 
 function drawContextMenu (): void {
   service.getAll().then((replies) => {
-    const nodes = createContextMenuItems(replies)
-    return createContextMenu(null, nodes)
-  })
+    const nodes = createContextMenuItems(replies);
+    return createContextMenu(null, nodes);
+  });
 }
 
 function subscribeOnRuntimeMessages () {
-  function requestHandler (request, sender, sendResponse) {
+  function requestHandler (request) {
     switch (request.topic) {
       case 'update_context_menu': {
-        drawContextMenu()
-        break
+        drawContextMenu();
+        break;
       }
       default: {
-        throw new Error('Unexpected message topic: ' + request.topic)
+        throw new Error('Unexpected message topic: ' + request.topic);
       }
     }
   }
 
-  chrome.runtime.onMessage.addListener(requestHandler)
+  chrome.runtime.onMessage.addListener(requestHandler);
 }
 
 function openOptionsOnPopupClick () {
-  chrome.browserAction.setPopup({ popup: '' })
+  chrome.browserAction.setPopup({ popup: '' });
 
   chrome.browserAction.onClicked.addListener(() => {
-    chrome.tabs.create({ url: 'index.html?#/options' })
-  })
+    chrome.tabs.create({ url: 'index.html?#/options' });
+  });
 }
 
 (function () {
-  drawContextMenu()
-  subscribeOnRuntimeMessages()
-  openOptionsOnPopupClick()
-})()
+  drawContextMenu();
+  subscribeOnRuntimeMessages();
+  openOptionsOnPopupClick();
+})();

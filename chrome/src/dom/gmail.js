@@ -2,38 +2,38 @@ function createDomParser () {
   return {
     extractFirstName: extractFirstName,
     extractFullName: extractFullName
-  }
+  };
 }
 
-export const parser = createDomParser()
+export const parser = createDomParser();
 
 function extractFullName (document) {
-  const defaultValue = null
+  const defaultValue = null;
 
   if (!document || !document.querySelector) {
-    return defaultValue
+    return defaultValue;
   }
 
-  const element = document.querySelector('input[name=to]')
+  const element = document.querySelector('input[name=to]');
   if (!element) {
-    return defaultValue
+    return defaultValue;
   }
 
-  const text = element.value
+  const text = element.value;
   if (!text) {
-    return defaultValue
+    return defaultValue;
   }
 
-  return text.split('<')[0]
+  return text.split('<')[0];
 }
 
 function extractFirstName (document) {
-  const defaultValue = null
+  const defaultValue = null;
 
-  const fullName = extractFullName(document)
+  const fullName = extractFullName(document);
   if (!fullName) {
-    return defaultValue
+    return defaultValue;
   }
 
-  return fullName.split(' ')[0]
+  return fullName.split(' ')[0];
 }
