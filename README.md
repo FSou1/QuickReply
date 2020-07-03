@@ -1,12 +1,12 @@
 # QuickReply
 
-🌟 The main purpose of this extension is to make answers to frequently asked questions faster.
+🌟 [QuickReply](https://chrome.google.com/webstore/detail/quickreply/enngmhjfhandgjeccahinpmjfmllklki) allows you to reply to frequently asked questions faster.
 
 * Sometimes you might need to reply to a lot of people;
 * And you don't always have time to personalize the answers;
 * Or your answers are not always perfectly polite (but it's not that hard, is it?).
 
-✔️ I hope this extension will allow you to solve these issues once and for all.
+✔️ This extension will help you to solve these issues once and for all.
 
 ## Want to contribute?
 
