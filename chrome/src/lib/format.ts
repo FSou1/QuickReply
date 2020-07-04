@@ -17,6 +17,6 @@ export function format (reply: Reply, document: HTMLDocument): string {
   }
 
   return content
-    .replace('{first_name}', parser.extractFirstName(document))
-    .replace('{full_name}', parser.extractFullName(document));
+    .replace(/{first_name}/gi, parser.extractFirstName(document))
+    .replace(/{full_name}/gi, parser.extractFullName(document));
 }

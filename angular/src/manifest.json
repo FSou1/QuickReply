@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "QuickReply",
-  "description": "✎ A chrome extension for quick replies to frequently asked questions",
-  "version": "1.0.4",
+  "description": "Use your notes to reply faster",
+  "version": "1.0.5",
 
   "icons": {
     "16": "img/icon16.png",
