@@ -10,7 +10,7 @@ import { SortablejsModule } from 'ngx-sortablejs';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    SortablejsModule
+    SortablejsModule,
   ],
   exports: [
     MaterialModule,
