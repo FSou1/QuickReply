@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ReplyService } from '../../services/reply.service';
 import { Reply } from '../../models';
 import { NotificationService } from 'src/app/modules/shared/services/notification.service';
 import { ExchangeService } from 'src/app/modules/shared/services/exchange.service';
+import * as Sortable from 'sortablejs';
 
 @Component({
   selector: 'app-reply-list',
@@ -12,12 +12,18 @@ import { ExchangeService } from 'src/app/modules/shared/services/exchange.servic
 })
 export class ReplyListComponent implements OnInit {
   data: Reply[];
-
+  options: Sortable.Options;
+  
   constructor (
     private service: ReplyService,
     private notification: NotificationService,
     private exchange: ExchangeService
-  ) { }
+  ) {
+    this.options = {
+      handle: '.handle',
+      onUpdate: () => this.service.set(this.data)
+    };
+  }
 
   ngOnInit (): void {
     this.service.getAll().then(data => {
@@ -25,11 +31,8 @@ export class ReplyListComponent implements OnInit {
     });
   }
 
-  drop (event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.data, event.previousIndex, event.currentIndex);
-    this.service.set(this.data).then(() => {
-      this.notification.show('Reply was reordered');
-    });
+  update(replies: Reply[]): void {
+    this.service.set(replies);
   }
 
   delete (reply: Reply): void {

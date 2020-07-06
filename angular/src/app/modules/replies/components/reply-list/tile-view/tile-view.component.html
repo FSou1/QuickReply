@@ -1,0 +1,19 @@
+<div class="container" [sortablejs]="items" [sortablejsOptions]="options">
+  <mat-card *ngFor="let item of items">
+    <mat-card-header>
+      <mat-icon mat-card-avatar [inline]="true" class="handle">drag_indicator</mat-icon>
+      <mat-card-title>{{ item.displayName }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p class="content">
+        {{ item.content }}
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button color="warn" (click)="delete(item)">Delete</button>
+      <button mat-button color="primary" [routerLink]="['/options/replies/edit', item.id]">Edit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
