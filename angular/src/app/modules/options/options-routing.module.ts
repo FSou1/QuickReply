@@ -12,6 +12,11 @@ const routes: Routes = [
     path: 'replies',
     component: OptionsComponent,
     loadChildren: () => import('../replies/replies.module').then(m => m.RepliesModule)
+  },
+  {
+    path: 'changelog',
+    component: OptionsComponent,
+    loadChildren: () => import('../changelog/changelog.module').then(m => m.ChangelogModule)
   }
 ];
 
