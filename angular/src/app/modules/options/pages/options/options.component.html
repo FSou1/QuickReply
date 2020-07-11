@@ -1,6 +1,22 @@
 <mat-toolbar color="primary" class="toolbar">
   <mat-toolbar-row class="toolbar-row">
     <span>QuickReply</span>
+    <span class="example-spacer"></span>
+    <a mat-button href="https://github.com/FSou1/QuickReply" target="_blank">
+      <img
+        class="logo-button"
+        src="assets/img/github-circle-white-transparent.svg"
+      />
+      GitHub
+    </a>
+    
+    <a mat-button href="https://chrome.google.com/webstore/detail/quickreply/enngmhjfhandgjeccahinpmjfmllklki" target="_blank">
+      <img
+        class="logo-button"
+        src="assets/img/chrome-web-store.svg"
+      />
+      Store
+    </a>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -9,6 +25,9 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/options/replies'">
         <mat-icon matListIcon>comment_bank</mat-icon> Replies
+      </a>
+      <a mat-list-item [routerLink]="'/options/changelog'">
+        <mat-icon matListIcon>description</mat-icon> Changelog
       </a>
     </mat-nav-list>
   </mat-sidenav>

@@ -5,11 +5,15 @@ import { UiModule } from '../shared/ui.module';
 import { CreateReplyComponent } from './components/create-reply/create-reply.component';
 import { RepliesRoutingModule } from './replies-routing.module';
 import { EditReplyComponent } from './components/edit-reply/edit-reply.component';
+import { ListViewComponent } from './components/reply-list/list-view/list-view.component';
+import { TileViewComponent } from './components/reply-list/tile-view/tile-view.component';
 
 const COMPONENTS = [
   ReplyListComponent,
   CreateReplyComponent,
-  EditReplyComponent
+  EditReplyComponent,
+  ListViewComponent,
+  TileViewComponent
 ];
 
 @NgModule({

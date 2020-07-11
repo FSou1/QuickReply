@@ -4,23 +4,6 @@
   bottom: 25px;
 }
 
-.mat-expansion-panel-header-title {
-  flex: 0 0 275px;
-}
-
-.mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
-  overflow: hidden;
-}
-
-.description {
-  width: 75%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.content {
-  white-space: pre-line;
+mat-button-toggle-group {
+  margin-bottom: 16px;
 }

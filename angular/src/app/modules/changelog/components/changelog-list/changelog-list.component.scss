@@ -1,0 +1,30 @@
+.changes-entry ul li {
+  margin-top: 5px;
+}
+
+.label {
+  padding: .1rem .2rem;
+  display: inline-block;
+}
+
+.label.label-round {
+  border-radius: 5rem;
+  padding-left: .4rem;
+  padding-right: .4rem;
+}
+
+.text-light {
+  color: #fff;
+}
+
+.label-fixed {
+  background: #a1548b;
+}
+
+.label-changed {
+  background: #ffb700;
+}
+
+.label-added {
+  background: #32b643;
+}

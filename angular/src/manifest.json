@@ -3,7 +3,7 @@
 
   "name": "QuickReply",
   "description": "Use your notes to reply faster",
-  "version": "1.0.5",
+  "version": "1.0.7",
 
   "icons": {
     "16": "img/icon16.png",
@@ -41,6 +41,40 @@
     "scripts": [
       "backgroundPage.js"
     ]
+  },
+
+  "commands": {
+    "paste-reply-#1": {
+      "suggested_key": {
+        "default": "Alt+1",
+        "mac": "Alt+1"
+      },
+      "description": "Paste the first reply"
+    },
+
+    "paste-reply-#2": {
+      "suggested_key": {
+        "default": "Alt+2",
+        "mac": "Alt+2"
+      },
+      "description": "Paste the second reply"
+    },
+
+    "paste-reply-#3": {
+      "suggested_key": {
+        "default": "Alt+3",
+        "mac": "Alt+3"
+      },
+      "description": "Paste the third reply"
+    },
+
+    "paste-reply-#4": {
+      "description": "Paste the fourth reply"
+    },
+
+    "paste-reply-#5": {
+      "description": "Paste the fifth reply"
+    }
   },
 
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"

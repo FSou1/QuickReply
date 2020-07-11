@@ -1,12 +1,18 @@
-import { Guid } from "guid-typescript";
+import { Guid } from 'guid-typescript';
 
 function createService() {
   const key = 'options';
 
   return {
-    get: function(id) {
+    get: function (id) {
       return this.getAll().then((result) => {
-        return result.find(i => i.id === id);
+        return result.find((i) => i.id === id);
+      });
+    },
+
+    take: function (index) {
+      return this.getAll().then((result) => {
+        return result[index - 1];
       });
     },
 
@@ -33,12 +39,12 @@ function createService() {
 
     remove: function (item) {
       return this.getAll().then((result) => {
-        const items = result.filter(i => i.id !== item.id);
+        const items = result.filter((i) => i.id !== item.id);
         return this.update(items).then(() => item);
       });
     },
 
-    update: function(items) {
+    update: function (items) {
       return new Promise((resolve, reject) => {
         const obj = {};
         obj[key] = items;
@@ -51,7 +57,7 @@ function createService() {
           }
         });
       });
-    }
+    },
   };
 }
 

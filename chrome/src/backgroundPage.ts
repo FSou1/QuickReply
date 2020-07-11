@@ -13,65 +13,65 @@ export class MenuItem {
   nodes?: MenuItem[];
 }
 
-function createContextMenuItem (reply: Reply): MenuItem {
+function createContextMenuItem(reply: Reply): MenuItem {
   return {
     id: reply.id,
-    title: reply.displayName
+    title: reply.displayName,
   };
 }
 
-function createContextMenuItems (replies: Reply[]): MenuItem[] {
+function createContextMenuItems(replies: Reply[]): MenuItem[] {
   const root: MenuItem = {
     id: '00000000-0000-0000-0000-000000000000',
     title: 'QuickReply',
-    nodes: replies.map(createContextMenuItem)
+    nodes: replies.map(createContextMenuItem),
   };
   return [root];
 }
 
-function onMenuItemClick (info: any, tab: any): void {
+function onMenuItemClick(info: any, tab: any): void {
   chrome.tabs.sendMessage(tab.id, {
     action: 'context-click',
-    menuItemId: info.menuItemId
+    menuItemId: info.menuItemId,
   });
 }
 
-function createMenuItem (id: any, title: string, parentId: string) {
+function createMenuItem(id: any, title: string, parentId: string) {
   return {
     id,
     title,
     parentId,
     contexts: ['editable'],
-    onclick: onMenuItemClick
+    onclick: onMenuItemClick,
   };
 }
 
-function createChildMenuItems (node: MenuItem): void {
+function createChildMenuItems(node: MenuItem): void {
   if (node.id && node.nodes) {
     createMenu(node.id, node.nodes);
   }
 }
 
-function createMenu (parentId: string, nodes: MenuItem[]): void {
+function createMenu(parentId: string, nodes: MenuItem[]): void {
   for (const node of nodes) {
     const item = createMenuItem(node.id, node.title, parentId);
     chrome.contextMenus.create(item, () => createChildMenuItems(node));
   }
 }
 
-function createContextMenu (parentId: string, nodes: MenuItem[]): void {
+function createContextMenu(parentId: string, nodes: MenuItem[]): void {
   chrome.contextMenus.removeAll(() => createMenu(parentId, nodes));
 }
 
-function drawContextMenu (): void {
+function drawContextMenu(): void {
   service.getAll().then((replies) => {
     const nodes = createContextMenuItems(replies);
     return createContextMenu(null, nodes);
   });
 }
 
-function subscribeOnRuntimeMessages () {
-  function requestHandler (request) {
+function subscribeOnRuntimeMessages() {
+  function requestHandler(request) {
     switch (request.topic) {
       case 'update_context_menu': {
         drawContextMenu();
@@ -86,7 +86,7 @@ function subscribeOnRuntimeMessages () {
   chrome.runtime.onMessage.addListener(requestHandler);
 }
 
-function openOptionsOnPopupClick () {
+function openOptionsOnPopupClick() {
   chrome.browserAction.setPopup({ popup: '' });
 
   chrome.browserAction.onClicked.addListener(() => {
@@ -94,8 +94,26 @@ function openOptionsOnPopupClick () {
   });
 }
 
+function onCommandListener(command) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const index = command.split('-#')[1];
+
+    const request = {
+      action: 'paste-reply',
+      replyIndex: index,
+    };
+
+    chrome.tabs.sendMessage(tabs[0].id, request);
+  });
+}
+
+function subscribeOnHotkeys() {
+  chrome.commands.onCommand.addListener(onCommandListener);
+}
+
 (function () {
   drawContextMenu();
   subscribeOnRuntimeMessages();
+  subscribeOnHotkeys();
   openOptionsOnPopupClick();
 })();
