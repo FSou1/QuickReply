@@ -36,7 +36,7 @@ export class CreateReplyComponent implements OnInit {
   ngOnInit(): void {
     this.displayName.nativeElement.focus();
     this.form = new FormGroup({
-      displayName: new FormControl(null, [Validators.maxLength(25)]),
+      displayName: new FormControl(null, [Validators.required, Validators.maxLength(25)]),
       content: new FormControl(null, [Validators.required]),
     });
   }

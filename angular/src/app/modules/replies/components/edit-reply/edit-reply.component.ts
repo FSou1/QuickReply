@@ -34,7 +34,7 @@ export class EditReplyComponent implements OnInit {
   ngOnInit (): void {
     this.displayName.nativeElement.focus();
     this.form = new FormGroup({
-      displayName: new FormControl('', [Validators.maxLength(25)]),
+      displayName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
       content: new FormControl('', [Validators.required])
     });
 
