@@ -5,29 +5,62 @@ import { service } from '../../shared/service.js';
 
 chrome.runtime.onMessage.addListener(requestHandler);
 
-function requestHandler (request) {
-  if (request && request.action === 'context-click' && request.menuItemId) {
-    const focusedElem = findFocusedElem(window.document);
-    if (!focusedElem) {
-      throw new Error('focusedElem was not found');
+function onContextClick(request) {
+  const focusedElem = findFocusedElem(window.document);
+  if (!focusedElem) {
+    throw new Error('focusedElem was not found');
+  }
+
+  const replyId = request.menuItemId;
+  if (!replyId) {
+    throw new Error('replyId was null or empty');
+  }
+
+  service.get(replyId).then((reply) => {
+    if (reply) {
+      const content = format(reply, window.document);
+
+      insertAtCursor(focusedElem, content);
     }
+  });
+}
 
-    const replyId = request.menuItemId;
-    if (!replyId) {
-      throw new Error('replyId was null or empty');
+function onPasteReply(request) {
+  const focusedElem = findFocusedElem(window.document);
+  if (!focusedElem) {
+    throw new Error('focusedElem was not found');
+  }
+
+  const replyIndex = request.replyIndex;
+  if (!replyIndex) {
+    throw new Error('replyId was invalid');
+  }
+
+  service.take(replyIndex).then((reply) => {
+    if (reply) {
+      const content = format(reply, window.document);
+
+      insertAtCursor(focusedElem, content);
     }
+  });
+}
 
-    service.get(replyId).then((reply) => {
-      if (reply) {
-        const content = format(reply, window.document);
-
-        insertAtCursor(focusedElem, content);
-      }
-    });
+function requestHandler(request) {
+  switch (request.action) {
+    case 'paste-reply': {
+      onPasteReply(request);
+      break;
+    }
+    case 'context-click': {
+      onContextClick(request);
+      break;
+    }
+    default:
+      throw new Error('Unexpected request action');
   }
 }
 
-function insertAtCursor (element, textToInsert) {
+function insertAtCursor(element, textToInsert) {
   if (!element) {
     throw new Error('Unexpected input' + element);
   }
