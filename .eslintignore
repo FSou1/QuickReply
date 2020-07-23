@@ -3,4 +3,5 @@
 *.scss
 *.html
 *.svg
+*.gif
 dist/
