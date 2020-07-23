@@ -111,7 +111,16 @@ function subscribeOnHotkeys() {
   chrome.commands.onCommand.addListener(onCommandListener);
 }
 
+function subscribeOnInstalled() {
+  chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason == 'install') {
+      chrome.tabs.create({ url: 'index.html?#/options?walkthrough=true' });
+    }
+  });
+}
+
 (function () {
+  subscribeOnInstalled();
   drawContextMenu();
   subscribeOnRuntimeMessages();
   subscribeOnHotkeys();

@@ -2,7 +2,12 @@
   <mat-toolbar-row class="toolbar-row">
     <span>QuickReply</span>
     <span class="example-spacer"></span>
-    <a mat-button href="https://github.com/FSou1/QuickReply" target="_blank">
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>help</mat-icon>
+    </button>
+
+    <a mat-button [href]="githubUrl" target="_blank">
       <img
         class="logo-button"
         src="assets/img/github-circle-white-transparent.svg"
@@ -10,7 +15,7 @@
       GitHub
     </a>
     
-    <a mat-button href="https://chrome.google.com/webstore/detail/quickreply/enngmhjfhandgjeccahinpmjfmllklki" target="_blank">
+    <a mat-button [href]="chromeWebStoreUrl" target="_blank" class="chrome_web_store_icon">
       <img
         class="logo-button"
         src="assets/img/chrome-web-store.svg"
@@ -19,6 +24,18 @@
     </a>
   </mat-toolbar-row>
 </mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="startTutorial()">
+    <mat-icon>ondemand_video</mat-icon> Start a tutorial
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <a mat-menu-item [href]="chromeWebStoreUrl" target="_blank">
+    <mat-icon matListIcon>feedback</mat-icon> Send feedback
+  </a>
+</mat-menu>
 
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav mode="side" class="sidenav" opened>

@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  community: {
+    githubUrl: 'https://github.com/FSou1/QuickReply',
+    chromeStoreUrl: 'https://chrome.google.com/webstore/detail/quickreply/enngmhjfhandgjeccahinpmjfmllklki'
+  }
 };
 
 /*
