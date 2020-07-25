@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="toolbar">
-  <mat-toolbar-row class="toolbar-row">
+  <mat-toolbar-row>
     <span>QuickReply</span>
     <span class="example-spacer"></span>
 
@@ -14,12 +14,14 @@
       />
       GitHub
     </a>
-    
-    <a mat-button [href]="chromeWebStoreUrl" target="_blank" class="chrome_web_store_icon">
-      <img
-        class="logo-button"
-        src="assets/img/chrome-web-store.svg"
-      />
+
+    <a
+      mat-button
+      [href]="chromeWebStoreUrl"
+      target="_blank"
+      class="chrome_web_store_icon"
+    >
+      <img class="logo-button" src="assets/img/chrome-web-store.svg" />
       Store
     </a>
   </mat-toolbar-row>
@@ -37,7 +39,7 @@
   </a>
 </mat-menu>
 
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container fullscreen>
   <mat-sidenav mode="side" class="sidenav" opened>
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/options/replies'">
@@ -48,7 +50,9 @@
       </a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content">
-    <router-outlet></router-outlet>
+  <mat-sidenav-content>
+    <div class="sidenav-content-inner">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
