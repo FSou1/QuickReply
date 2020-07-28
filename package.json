@@ -1,7 +1,7 @@
 {
   "name": "chrome-extension-quick-reply",
-  "version": "1.0.8",
-  "description": "chrome-extension-quick-reply",
+  "version": "1.0.9",
+  "description": "simplify your copy/paste experience in chrome",
   "scripts": {
     "ng": "ng",
     "start": "npm run watch",

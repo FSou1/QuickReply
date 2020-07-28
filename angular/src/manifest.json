@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "QuickReply",
-  "description": "Use your notes to reply faster",
-  "version": "1.0.8",
+  "description": "Simplify your copy/paste experience",
+  "version": "1.0.9",
 
   "icons": {
     "16": "img/icon16.png",
