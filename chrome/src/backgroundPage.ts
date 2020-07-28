@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { service } from '../../shared/service.js';
+import { analytics } from '../../shared/analytics.js';
 
 export class Reply {
   id: string;
@@ -30,10 +31,13 @@ function createContextMenuItems(replies: Reply[]): MenuItem[] {
 }
 
 function onMenuItemClick(info: any, tab: any): void {
-  chrome.tabs.sendMessage(tab.id, {
+  const request = {
     action: 'context-click',
     menuItemId: info.menuItemId,
-  });
+  };
+
+  chrome.tabs.sendMessage(tab.id, request);
+  analytics.event('message', request.action);
 }
 
 function createMenuItem(id: any, title: string, parentId: string) {
@@ -104,6 +108,7 @@ function onCommandListener(command) {
     };
 
     chrome.tabs.sendMessage(tabs[0].id, request);
+    analytics.event('message', request.action);
   });
 }
 
@@ -114,12 +119,18 @@ function subscribeOnHotkeys() {
 function subscribeOnInstalled() {
   chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason == 'install') {
+      analytics.event('extension', 'install');
       chrome.tabs.create({ url: 'index.html?#/options?walkthrough=true' });
     }
   });
 }
 
+function initAnalytics() {
+  analytics.init(atob('VUEtMTU4OTU4MTc2LTI='));
+}
+
 (function () {
+  initAnalytics();
   subscribeOnInstalled();
   drawContextMenu();
   subscribeOnRuntimeMessages();
