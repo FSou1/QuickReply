@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-quick-reply",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "simplify your copy/paste experience in chrome",
   "scripts": {
     "ng": "ng",
@@ -11,8 +11,8 @@
     "build:chrome": "webpack --config chrome/webpack.config.ts",
     "build:chrome-production": "webpack -p --config chrome/webpack.config.prod.ts",
     "watch:chrome": "webpack --config chrome/webpack.config.ts -w",
-    "build": "npm run clean && npm run build:angular && npm run build:chrome",
-    "build:production": "npm run build:angular-production && npm run build:chrome-production && npm run pack",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && npm run clean && npm run build:angular && npm run build:chrome",
+    "build:production": "set NODE_OPTIONS=--openssl-legacy-provider && npm run build:angular-production && npm run build:chrome-production && npm run pack",
     "watch": "npm run clean && npm-run-all --parallel watch:*",
     "clean": "rimraf angular/dist",
     "pack": "cd angular/dist && bestzip ../../extension-build.zip *",

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { service } from '../../shared/service.js';
-import { analytics } from '../../shared/analytics.js';
 
 export class Reply {
   id: string;
@@ -30,23 +29,21 @@ function createContextMenuItems(replies: Reply[]): MenuItem[] {
   return [root];
 }
 
-function onMenuItemClick(info: any, tab: any): void {
+(chrome as any).contextMenus.onClicked.addListener((item, tab) => {
   const request = {
     action: 'context-click',
-    menuItemId: info.menuItemId,
+    menuItemId: item.menuItemId,
   };
 
-  chrome.tabs.sendMessage(tab.id, request);
-  analytics.event('message', request.action);
-}
+  (chrome as any).tabs.sendMessage(tab.id, request);
+});
 
 function createMenuItem(id: any, title: string, parentId: string) {
   return {
     id,
     title,
     parentId,
-    contexts: ['editable'],
-    onclick: onMenuItemClick,
+    contexts: ['editable']
   };
 }
 
@@ -59,12 +56,12 @@ function createChildMenuItems(node: MenuItem): void {
 function createMenu(parentId: string, nodes: MenuItem[]): void {
   for (const node of nodes) {
     const item = createMenuItem(node.id, node.title, parentId);
-    chrome.contextMenus.create(item, () => createChildMenuItems(node));
+    (chrome as any).contextMenus.create(item, () => createChildMenuItems(node));
   }
 }
 
 function createContextMenu(parentId: string, nodes: MenuItem[]): void {
-  chrome.contextMenus.removeAll(() => createMenu(parentId, nodes));
+  (chrome as any).contextMenus.removeAll(() => createMenu(parentId, nodes));
 }
 
 function drawContextMenu(): void {
@@ -87,19 +84,19 @@ function subscribeOnRuntimeMessages() {
     }
   }
 
-  chrome.runtime.onMessage.addListener(requestHandler);
+  (chrome as any).runtime.onMessage.addListener(requestHandler);
 }
 
 function openOptionsOnPopupClick() {
-  chrome.browserAction.setPopup({ popup: '' });
+  (chrome as any).action.setPopup({ popup: '' });
 
-  chrome.browserAction.onClicked.addListener(() => {
-    chrome.tabs.create({ url: 'index.html?#/options' });
+  (chrome as any).action.onClicked.addListener(() => {
+    (chrome as any).tabs.create({ url: 'index.html?#/options' });
   });
 }
 
 function onCommandListener(command) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  (chrome as any).tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const index = command.split('-#')[1];
 
     const request = {
@@ -107,30 +104,23 @@ function onCommandListener(command) {
       replyIndex: index,
     };
 
-    chrome.tabs.sendMessage(tabs[0].id, request);
-    analytics.event('message', request.action);
+    (chrome as any).tabs.sendMessage(tabs[0].id, request);
   });
 }
 
 function subscribeOnHotkeys() {
-  chrome.commands.onCommand.addListener(onCommandListener);
+  (chrome as any).commands.onCommand.addListener(onCommandListener);
 }
 
 function subscribeOnInstalled() {
-  chrome.runtime.onInstalled.addListener(function (details) {
+  (chrome as any).runtime.onInstalled.addListener(function (details) {
     if (details.reason == 'install') {
-      analytics.event('extension', 'install');
-      chrome.tabs.create({ url: 'index.html?#/options?walkthrough=true' });
+      (chrome as any).tabs.create({ url: 'index.html?#/options?walkthrough=true' });
     }
   });
 }
 
-function initAnalytics() {
-  analytics.init(atob('VUEtMTU4OTU4MTc2LTI='));
-}
-
 (function () {
-  initAnalytics();
   subscribeOnInstalled();
   drawContextMenu();
   subscribeOnRuntimeMessages();
