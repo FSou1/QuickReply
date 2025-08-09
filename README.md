@@ -8,6 +8,6 @@
 
 ✔️ This extension will help you to solve these issues once and for all.
 
-## Want to contribute?
+## Enjoying this extension?
 
-* If you are looking to make your first contribution or have a suggestion, please [open an issue](https://github.com/FSou1/QuickReply/issues/new).
+Your support keeps this extension alive — [Sponsor on GitHub](https://github.com/sponsors/FSou1) ❤️
